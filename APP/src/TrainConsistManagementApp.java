@@ -1,51 +1,28 @@
-
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println(" UC4 - Maintain Ordered Bogie Consist");
-        System.out.println("==========================================\n");
+        System.out.println("========================================");
+        System.out.println("UC5 - Preserve Insertion Order of Bogies");
+        System.out.println("========================================\n");
 
-        // Create a LinkedList to maintain ordered bogies
-        List<String> trainConsist = new LinkedList<>();
+        // LinkedHashSet preserves order and ensures uniqueness
+        Set<String> formation = new LinkedHashSet<>();
 
-        // Add bogies
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        // Adding bogies
+        formation.add("Engine");
+        formation.add("Sleeper");
+        formation.add("Cargo");
+        formation.add("Guard");
 
-        System.out.println("Initial Train Consist:");
-        System.out.println(trainConsist);
+        // Attempting to add duplicate bogie
+        formation.add("Sleeper");
 
-        // Insert Pantry Car at position 2
-        // Index 2 means 3rd position
-        trainConsist.add(2, "Pantry Car");
-
-        System.out.println("\nAfter inserting Pantry Car at position 2:");
-        System.out.println(trainConsist);
-
-        // Remove first bogie
-        if (!trainConsist.isEmpty()) {
-            String removedFirst = ((LinkedList<String>) trainConsist).removeFirst();
-            System.out.println("\nRemoved first bogie: " + removedFirst);
-        }
-
-        // Remove last bogie
-        if (!trainConsist.isEmpty()) {
-            String removedLast = ((LinkedList<String>) trainConsist).removeLast();
-            System.out.println("Removed last bogie: " + removedLast);
-        }
-
-        // Display final ordered train consist
-        System.out.println("\nFinal Ordered Train Consist:");
-        for (String bogie : trainConsist) {
-            System.out.println(bogie);
-        }
+        // Display final formation
+        System.out.println("Final Train Formation:");
+        System.out.println(formation);
     }
 }
