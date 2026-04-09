@@ -6,91 +6,67 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Bogie {
-    String name;
-    int capacity;
+class GoodsBogie {
+    String type;
+    String cargo;
 
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
     }
 }
 
-public class UC11TrainConsistManagementAppTest {
+public class UC12TrainConsistManagementAppTest {
 
     @Test
-    void testReduce_TotalSeatCalculation() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
+    void testSafety_AllBogiesValid() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
 
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
+        boolean result = UC9TrainConsistManagementApp.isSafe((List) bogies);
 
-        assertEquals(132, total);
+        assertTrue(result);
     }
 
     @Test
-    void testReduce_MultipleBogiesAggregation() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("First Class", 24));
+    void testSafety_CylindricalWithInvalidCargo() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Coal"));
 
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
+        boolean result = UC9TrainConsistManagementApp.isSafe((List) bogies);
 
-        assertEquals(156, total);
+        assertFalse(result);
     }
 
     @Test
-    void testReduce_SingleBogieCapacity() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
+    void testSafety_NonCylindricalBogiesAllowed() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Box", "Grain"));
 
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
+        boolean result = UC9TrainConsistManagementApp.isSafe((List) bogies);
 
-        assertEquals(72, total);
+        assertTrue(result);
     }
 
     @Test
-    void testReduce_EmptyBogieList() {
-        List<Bogie> bogies = new ArrayList<>();
+    void testSafety_MixedBogiesWithViolation() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Cylindrical", "Coal"));
 
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
+        boolean result = UC9TrainConsistManagementApp.isSafe((List) bogies);
 
-        assertEquals(0, total);
+        assertFalse(result);
     }
 
     @Test
-    void testReduce_CorrectCapacityExtraction() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("First Class", 24));
+    void testSafety_EmptyBogieList() {
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
+        boolean result = UC9TrainConsistManagementApp.isSafe((List) bogies);
 
-        assertEquals(24, total);
-    }
-
-    @Test
-    void testReduce_AllBogiesIncluded() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("Sleeper", 72));
-
-        int total = UC9TrainConsistManagementApp.totalCapacity((List) bogies);
-
-        assertEquals(144, total);
-    }
-
-    @Test
-    void testReduce_OriginalListUnchanged() {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-
-        int size = bogies.size();
-
-        UC9TrainConsistManagementApp.totalCapacity((List) bogies);
-
-        assertEquals(size, bogies.size());
+        assertTrue(result);
     }
 }
