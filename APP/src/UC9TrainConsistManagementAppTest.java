@@ -16,7 +16,7 @@ class Bogie {
     }
 }
 
-public class UC9TrainConsistManagementAppTest {
+public class UC11TrainConsistManagementAppTest {
 
     @Test
     void testReduce_TotalSeatCalculation() {
