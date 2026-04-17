@@ -1,56 +1,25 @@
 package src.Main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-class CargoSafetyException extends RuntimeException {
-    CargoSafetyException(String message) {
-        super(message);
+public class UC17TrainConsistManagementApp {
+
+    public static String[] sortBogieNames(String[] bogieNames) {
+        Arrays.sort(bogieNames);
+        return bogieNames;
     }
-}
-
-class GoodsBogie {
-    String shape;
-    String cargo;
-
-    GoodsBogie(String shape) {
-        this.shape = shape;
-    }
-
-    public void assignCargo(String cargo) {
-        try {
-            if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-                throw new CargoSafetyException("Unsafe cargo assignment");
-            }
-            this.cargo = cargo;
-            System.out.println("Assigned " + cargo + " to " + shape);
-        } catch (CargoSafetyException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            System.out.println("Assignment attempt completed");
-        }
-    }
-}
-
-public class UC15TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
         System.out.println("========================================");
-        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println("UC17 - Arrays.sort()");
         System.out.println("========================================\n");
 
-        List<GoodsBogie> bogies = new ArrayList<>();
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        String[] sorted = sortBogieNames(bogieNames);
 
-        bogies.add(b1);
-        bogies.add(b2);
-
-        b1.assignCargo("Petroleum");
-        b2.assignCargo("Petroleum");
-
-        b2.assignCargo("Coal");
+        System.out.println("Sorted Bogie Names:");
+        System.out.println(Arrays.toString(sorted));
     }
 }
